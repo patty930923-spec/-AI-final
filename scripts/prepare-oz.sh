@@ -6,7 +6,13 @@ DEST="$ROOT/deploy/oz"
 
 mkdir -p "$DEST"
 cp "$ROOT/index.html" "$ROOT/styles.css" "$ROOT/app.js" "$DEST/"
+if [[ -f "$DEST/config.js" ]]; then
+  cp "$DEST/config.js" "$DEST/config.js.bak"
+fi
 cp "$ROOT/config.oz.example.js" "$DEST/config.js"
+if [[ -f "$DEST/config.js.bak" ]]; then
+  mv "$DEST/config.js.bak" "$DEST/config.js"
+fi
 
 cat <<EOF
 
