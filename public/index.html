@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#879d7d" />
+    <title>The Oasis · 綠洲</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="phone-frame">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">The Oasis</p>
+            <h1 class="app-title" id="pageTitle">首頁</h1>
+          </div>
+          <button class="token-pill" id="dewPill" type="button" aria-label="露珠點數">
+            <span>💧</span>
+            <strong id="dewBalance">0</strong>
+          </button>
+        </header>
+
+        <main class="page-stack">
+          <section class="page page-home active" data-page="home" aria-label="Home">
+            <div class="home-hero" id="homeHero">
+              <div class="paint-orb paint-orb-sun"></div>
+              <div class="paint-orb paint-orb-haze"></div>
+              <div class="paint-cloud paint-cloud-left"></div>
+              <div class="paint-cloud paint-cloud-right"></div>
+              <div class="hero-copy">
+                <p class="hero-kicker" id="heroGreeting">Hi</p>
+                <h2 id="heroHeadline">Your gentle oasis is ready.</h2>
+                <p class="hero-text" id="heroSubtext">Tiny steps. Softer days.</p>
+              </div>
+              <div class="hero-theme-pill" id="heroThemePill">Sunny · Calm</div>
+              <div class="palm palm-left"><span></span><span></span><span></span></div>
+              <div class="palm palm-right"><span></span><span></span><span></span></div>
+              <div class="companion">
+                <div class="companion-face"><span></span><span></span></div>
+                <div class="companion-leaf"></div>
+              </div>
+              <div class="paint-dune paint-dune-back"></div>
+              <div class="oasis-hill oasis-hill-back"></div>
+              <div class="oasis-water"></div>
+              <div class="oasis-shimmer"></div>
+              <div class="reeds reeds-left"><span></span><span></span><span></span></div>
+              <div class="reeds reeds-right"><span></span><span></span><span></span></div>
+              <div class="oasis-hill oasis-hill-front"></div>
+              <div class="paint-dune paint-dune-front"></div>
+            </div>
+
+            <section class="card oasis-theme-card">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="oasisTone">Oasis tone</p>
+                  <h3 data-i18n="weatherMood">Weather + mood</h3>
+                </div>
+              </div>
+              <div class="theme-control-grid">
+                <div class="theme-line">
+                  <span class="theme-label" data-i18n="weather">Weather</span>
+                  <div class="chip-row" id="weatherSwitch">
+                    <button class="theme-chip active" data-weather="sunny" type="button">Sunny</button>
+                    <button class="theme-chip" data-weather="rainy" type="button">Rainy</button>
+                    <button class="theme-chip" data-weather="moonlit" type="button">Moonlit</button>
+                  </div>
+                </div>
+                <div class="theme-line">
+                  <span class="theme-label" data-i18n="mood">Mood</span>
+                  <div class="chip-row" id="moodSwitch">
+                    <button class="theme-chip active" data-oasis-mood="calm" type="button">Calm</button>
+                    <button class="theme-chip" data-oasis-mood="fresh" type="button">Fresh</button>
+                    <button class="theme-chip" data-oasis-mood="cozy" type="button">Cozy</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="card soft-card mood-preview">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="weeklyCheckin">Weekly check-in</p>
+                  <h3 data-i18n="oneCircleDay">One circle a day</h3>
+                </div>
+                <span class="reward" id="checkinRewardHint">+5 dew / day</span>
+              </div>
+              <div class="mood-row" id="homeMoodRow"></div>
+              <div class="emoji-picker hidden" id="emojiPicker" role="listbox" aria-label="Choose mood emoji"></div>
+              <p class="micro-note checkin-note" id="checkinNote"></p>
+            </section>
+
+            <section class="card goal-card">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="myGoal">My Goal</p>
+                  <h3 class="sr-only" data-i18n="myGoal">My Goal</h3>
+                </div>
+                <span class="badge" id="goalSaveBadge" hidden>Saved</span>
+              </div>
+              <label class="input-stack goal-field">
+                <span data-i18n="goalTitle">Goal title</span>
+                <input id="goalTitleInput" type="text" maxlength="80" placeholder="本週想完成的事…" />
+              </label>
+              <label class="input-stack goal-field">
+                <span data-i18n="goalDetail">Details</span>
+                <textarea id="goalCopyInput" rows="2" maxlength="200" placeholder="寫下你的節奏與提醒…"></textarea>
+              </label>
+              <button class="secondary-btn full-width" id="saveGoalBtn" type="button" data-i18n="saveGoal">Save goal</button>
+            </section>
+
+            <section class="card party-card" id="homePartyCard">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="partyMission">Party mission</p>
+                  <h3 id="homeQuestTitle">—</h3>
+                </div>
+                <span class="reward" id="homeQuestReward">+0 dew</span>
+              </div>
+              <p id="homeQuestCopy">—</p>
+              <div class="party-row">
+                <button class="primary-btn" data-link-page="quest" type="button" data-i18n="seeMission">See mission</button>
+              </div>
+            </section>
+
+            <button class="journal-quick-link" data-link-page="journal" type="button">
+              <div>
+                <p class="eyebrow" data-i18n="journal">Journal</p>
+                <strong data-i18n="writeOneLine">Write for today</strong>
+              </div>
+              <span data-i18n="open">Open</span>
+            </button>
+          </section>
+
+          <section class="page page-quest" data-page="quest" aria-label="Quest">
+            <div class="segmented" id="questTabs">
+              <button class="segment active" data-quest-tab="quest" type="button" data-i18n="questTab">Quest</button>
+              <button class="segment" data-quest-tab="card" type="button" data-i18n="cardTab">Card</button>
+              <button class="segment" data-quest-tab="shop" type="button" data-i18n="shopTab">Shop</button>
+            </div>
+
+            <div class="quest-pane active" data-quest-pane="quest">
+              <section class="card theme-card" id="weeklyThemeCard">
+                <div>
+                  <p class="eyebrow" data-i18n="themeOfWeek">Theme of the week</p>
+                  <h2 id="weeklyThemeTitle">—</h2>
+                  <p id="weeklyThemeCopy">—</p>
+                  <div class="tag-row" id="weeklyThemeTags"></div>
+                </div>
+                <div class="theme-mascot">
+                  <div class="seedling"></div>
+                  <div class="dew-drop"></div>
+                </div>
+              </section>
+
+              <section class="card current-quest" id="activeQuestCard">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow" data-i18n="currentQuest">My current quest</p>
+                    <h3 id="activeQuestTitle">—</h3>
+                  </div>
+                  <span class="micro-note" id="activeQuestDays">—</span>
+                </div>
+                <p id="activeQuestCopy">—</p>
+                <div class="progress-track">
+                  <div class="progress-fill warm" id="activeQuestFill" style="width: 0%"></div>
+                </div>
+                <div class="meta-row">
+                  <span id="activeQuestProgress">—</span>
+                  <span id="activeQuestReward">—</span>
+                </div>
+                <div class="button-row">
+                  <button class="secondary-btn" id="questProgressBtn" type="button" data-i18n="logProgress">Log progress</button>
+                  <button class="ghost-btn" id="leaveQuestBtn" type="button" data-i18n="leaveQuest">Leave quest</button>
+                </div>
+              </section>
+
+              <section class="stack-section">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow" data-i18n="thisWeekQuests">This week's quests</p>
+                    <h3 data-i18n="gentleQuests">Gentle quests</h3>
+                  </div>
+                </div>
+                <div id="weeklyQuestList"></div>
+              </section>
+
+              <section class="card build-card">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow" data-i18n="createOwn">Create your own</p>
+                    <h3 data-i18n="fitYourPace">Make it fit your pace</h3>
+                  </div>
+                </div>
+                <form class="custom-quest-form" id="customQuestForm">
+                  <label class="input-stack">
+                    <span data-i18n="questName">Quest name</span>
+                    <input id="customQuestTitle" type="text" maxlength="60" required placeholder="和朋友一起…" />
+                  </label>
+                  <label class="input-stack">
+                    <span data-i18n="questDesc">Description</span>
+                    <textarea id="customQuestDesc" rows="2" maxlength="160" placeholder="例如：每週散步 3 次"></textarea>
+                  </label>
+                  <div class="portion-grid">
+                    <label class="input-stack">
+                      <span data-i18n="friends">Friends</span>
+                      <input id="customQuestFriends" type="number" min="1" max="10" value="2" />
+                    </label>
+                    <label class="input-stack">
+                      <span data-i18n="rewardDew">Reward (dew)</span>
+                      <input id="customQuestReward" type="number" min="5" max="100" step="5" value="20" />
+                    </label>
+                  </div>
+                  <button class="primary-btn full-width" type="submit" data-i18n="createQuest">Create quest with friends</button>
+                </form>
+                <div class="custom-quest-list" id="customQuestList"></div>
+              </section>
+            </div>
+
+            <div class="quest-pane" data-quest-pane="card">
+              <section class="card collectible-card">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow" data-i18n="companionCard">Companion card</p>
+                    <h3 data-i18n="sageSprout">Sage Sprout</h3>
+                  </div>
+                </div>
+                <div class="companion-card-art"><div class="sprout-buddy"></div></div>
+                <p class="goal-copy" data-i18n="cardHint">Collect dew from check-ins and quests to grow your oasis.</p>
+              </section>
+            </div>
+
+            <div class="quest-pane" data-quest-pane="shop">
+              <section class="card shop-summary">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow" data-i18n="dewShop">Dew drop shop</p>
+                    <h3 data-i18n="spendGlow">Spend your glow</h3>
+                  </div>
+                  <span class="reward" id="shopDewBalance">0 dew</span>
+                </div>
+              </section>
+              <div class="shop-grid" id="shopGrid"></div>
+            </div>
+          </section>
+
+          <section class="page page-journal" data-page="journal" aria-label="Journal">
+            <section class="card journal-hero">
+              <div>
+                <p class="eyebrow" data-i18n="dailyNote">Daily note</p>
+                <h2 data-i18n="whatFeltSoft">What felt soft today?</h2>
+                <p data-i18n="journalHint">Write freely. Your words stay on this device.</p>
+              </div>
+            </section>
+
+            <section class="card write-card">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" id="journalDateLabel">Today</p>
+                  <h3 data-i18n="yourEntry">Your entry</h3>
+                </div>
+                <span class="badge" id="journalSaveBadge" hidden>Saved</span>
+              </div>
+              <label class="input-stack">
+                <span data-i18n="entryTitle">Title (optional)</span>
+                <input id="journalTitleInput" type="text" maxlength="80" placeholder="今天的小標題" />
+              </label>
+              <textarea class="journal-input" id="journalBodyInput" rows="6" placeholder="寫下今天的心情、想法或一件小事…"></textarea>
+              <div class="button-row">
+                <button class="primary-btn" id="saveJournalBtn" type="button" data-i18n="saveEntry">Save entry</button>
+                <button class="ghost-btn" id="clearJournalBtn" type="button" data-i18n="clearDraft">Clear</button>
+              </div>
+            </section>
+
+            <section class="card archive-card">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="weeklyArchive">Weekly archive</p>
+                  <h3 data-i18n="tapDay">Tap a day</h3>
+                </div>
+              </div>
+              <div class="archive-row" id="archiveRow"></div>
+            </section>
+
+            <section class="card day-detail" id="dayDetailCard">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" id="detailDate">—</p>
+                  <h3 id="detailTitle">—</h3>
+                </div>
+              </div>
+              <p id="detailNote" class="detail-empty" data-i18n="noEntryYet">No entry for this day yet.</p>
+            </section>
+          </section>
+
+          <section class="page page-journey" data-page="journey" aria-label="Journey">
+            <section class="card journey-hero">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="thisWeek">This week</p>
+                  <h2 data-i18n="journeySnapshot">Journey snapshot</h2>
+                </div>
+              </div>
+              <p class="goal-copy" data-i18n="journeyPlaceholder">Connect movement logs later. For now, track goals and journal here.</p>
+              <div class="summary-grid" id="journeySummary"></div>
+            </section>
+          </section>
+
+          <section class="page page-profile" data-page="profile" aria-label="Profile">
+            <section class="card profile-hero">
+              <div class="avatar-wrap">
+                <div class="avatar-figure look-sage" id="avatarFigure">
+                  <div class="avatar-head"></div>
+                  <div class="avatar-body"></div>
+                  <div class="avatar-buddy"></div>
+                </div>
+              </div>
+              <div class="profile-fields">
+                <p class="eyebrow" data-i18n="profile">Profile</p>
+                <label class="input-stack compact">
+                  <span data-i18n="displayName">Display name</span>
+                  <input id="profileNameInput" type="text" maxlength="40" />
+                </label>
+                <label class="input-stack compact">
+                  <span data-i18n="bio">Short bio</span>
+                  <textarea id="profileBioInput" rows="2" maxlength="120"></textarea>
+                </label>
+                <button class="secondary-btn" id="saveProfileBtn" type="button" data-i18n="saveProfile">Save profile</button>
+              </div>
+            </section>
+
+            <section class="card avatar-studio">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="avatarStudio">Avatar studio</p>
+                  <h3 data-i18n="dressOasis">Dress your oasis self</h3>
+                </div>
+                <span class="badge" id="avatarLookBadge">Sage calm</span>
+              </div>
+              <div class="studio-grid">
+                <button class="style-swatch active" data-avatar-look="sage" type="button">
+                  <strong>Sage calm</strong>
+                  <span>Soft green</span>
+                </button>
+                <button class="style-swatch" data-avatar-look="dune" type="button">
+                  <strong>Dune glow</strong>
+                  <span>Warm sand</span>
+                </button>
+                <button class="style-swatch" data-avatar-look="moon" type="button">
+                  <strong>Moon mist</strong>
+                  <span>Night walk</span>
+                </button>
+              </div>
+            </section>
+
+            <section class="card settings-card">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow" data-i18n="appSettings">App settings</p>
+                  <h3 data-i18n="languageAi">Language + AI</h3>
+                </div>
+              </div>
+              <div class="language-card">
+                <div>
+                  <p class="eyebrow" data-i18n="language">Language</p>
+                  <strong id="languageTitle">App language</strong>
+                </div>
+                <div class="segmented language-segmented" id="languageSwitch">
+                  <button class="segment" data-language="en" type="button">EN</button>
+                  <button class="segment active" data-language="zh" type="button">繁中</button>
+                </div>
+              </div>
+              <div class="api-key-block" id="aiServerBlock">
+                <div>
+                  <p class="eyebrow" data-i18n="aiServer">AI server</p>
+                  <strong id="aiServerStatus">…</strong>
+                </div>
+                <span class="badge" id="aiServerBadge">—</span>
+                <p class="micro-note" id="aiServerHint" data-i18n="aiServerHint">API key is stored on the server only (environment variables).</p>
+              </div>
+              <div class="settings-list">
+                <article>
+                  <div>
+                    <p class="eyebrow" data-i18n="privacy">Privacy</p>
+                    <strong data-i18n="diaryPrivate">Diary stays on device</strong>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </section>
+        </main>
+
+        <nav class="tabbar" aria-label="Primary">
+          <button class="tab active" data-page-target="home" type="button"><span data-nav-label="home">首頁</span></button>
+          <button class="tab" data-page-target="quest" type="button"><span data-nav-label="quest">任務</span></button>
+          <button class="tab" data-page-target="journal" type="button"><span data-nav-label="journal">日記</span></button>
+          <button class="tab" data-page-target="journey" type="button"><span data-nav-label="journey">歷程</span></button>
+          <button class="tab" data-page-target="profile" type="button"><span data-nav-label="profile">個人</span></button>
+        </nav>
+      </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

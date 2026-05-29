@@ -25,8 +25,10 @@ app.use((req, res, next) => {
   next();
 });
 
+const publicDir = path.join(__dirname, "public");
+
 app.use(express.json({ limit: "32kb" }));
-app.use(express.static(__dirname));
+app.use(express.static(publicDir));
 
 app.get("/api/status", (_req, res) => {
   res.json({
@@ -94,7 +96,7 @@ app.post("/api/chat", async (req, res) => {
 });
 
 app.get("*", (_req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(publicDir, "index.html"));
 });
 
 app.listen(PORT, () => {
